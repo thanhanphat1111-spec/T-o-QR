@@ -1,0 +1,5 @@
+{
+  "name": "GeoQR - Maps to QR",
+  "description": "Generate downloadable QR codes instantly from Google Maps links, raw coordinates, or location descriptions using AI to normalize inputs.",
+  "requestFramePermissions": []
+}
