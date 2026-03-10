@@ -1,0 +1,16 @@
+{
+  "name": "GeoQR Generator",
+  "short_name": "GeoQR",
+  "description": "Ứng dụng chuyển đổi tọa độ và liên kết Google Maps thành mã QR.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Google_Maps_icon_2020.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
