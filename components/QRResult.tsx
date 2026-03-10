@@ -14,23 +14,13 @@ export const QRResult: React.FC<QRResultProps> = ({ url, note, onReset }) => {
   const qrValue = useMemo(() => {
     if (!note?.trim()) return url;
 
-    // Chuyển đổi ghi chú: Thay khoảng trắng bằng dấu + để hiển thị gọn gàng trong URL
-    // Giữ nguyên dấu tiếng Việt để người dùng có thể đọc được trên màn hình quét
-    const cleanNote = note.trim().replace(/\s+/g, '+');
-
-    // Trường hợp 1: Link dài Google Maps (thường chứa tọa độ hoặc search query)
-    // Cú pháp Maps hỗ trợ: query + (Label)
-    if (url.includes('google.com/maps') || url.includes('maps.google.com')) {
-       if (url.includes('?') || url.includes('&q=') || url.includes('&query=')) {
-          return `${url}+(${cleanNote})`;
-       }
-       return `${url}?q=(${cleanNote})`;
-    }
-
-    // Trường hợp 2: Link rút gọn (maps.app.goo.gl) hoặc link khác
-    // Thêm tham số giả 'note' vào đuôi link.
-    // Máy quét sẽ hiển thị toàn bộ link kèm tham số này, giúp người dùng đọc được ghi chú.
+    // Thay vì nối thẳng vào tọa độ làm hỏng link Maps,
+    // ta thêm nó vào dưới dạng tham số phụ (?note=...).
+    // Google Maps sẽ chỉ đọc tọa độ và bỏ qua tham số này,
+    // nhưng người dùng vẫn sẽ thấy ghi chú trên màn hình quét QR.
+    const cleanNote = note.trim().replace(/\s+/g, '-');
     const separator = url.includes('?') ? '&' : '?';
+    
     return `${url}${separator}note=${cleanNote}`;
   }, [url, note]);
 
@@ -93,7 +83,7 @@ export const QRResult: React.FC<QRResultProps> = ({ url, note, onReset }) => {
                     {note}
                   </p>
                   <div className="mt-2 text-xs text-blue-600 bg-blue-100 p-2 rounded">
-                    <strong>Lưu ý:</strong> Khi quét, ghi chú sẽ xuất hiện ở phần đuôi của đường dẫn (ví dụ: <code>...?note=Noi+dung</code>). Hãy bấm <strong>"Mở link"</strong> để xem bản đồ.
+                    <strong>Lưu ý:</strong> Khi quét QR, nội dung ghi chú sẽ hiển thị ở phần cuối của đường link để bạn kiểm tra trước khi bấm mở bản đồ.
                   </div>
                </div>
             </div>
